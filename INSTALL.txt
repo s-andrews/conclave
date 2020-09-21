@@ -1,0 +1,113 @@
+Installing SeqMonk
+-------------------
+
+Windows
+-------
+
+Download the seqmonk zip file, and unzip it on your machine.  Windows has a 
+virtual filesystem view of zip files which allows you to look at the contents in windows
+explorer without actually unzipping the file - this isn't enough to run seqmonk, you need
+to right click on the zip file and extract the contents to a conventional folder.  Once
+you've done that just double click seqmonk.exe to run the program.
+
+You may find that the first time you run the app you get a Windows Smart Screen dialog
+saying that the app has been blocked.  You may be able to click on the button which 
+says "Run anyway", or you might have to click on a link to "more information" and then
+click on the button which says "Run anyway".  You only need to do this once and the
+app will be allowed to run after that.
+
+MacOS
+-----
+
+SeqMonk is distributed as a dmg file which is a virtual filesystem on a mac.  Just
+download the dmg file and double click on it.  You will see the seqmonk app appear in a 
+finder window.  Simply drag it from there to your Applications folder to install it.  
+If you don't have administrator rights on your Mac then you can drag SeqMonk to any
+other folder to run it, but you will then only be able to read and save data to your
+home directory.
+
+Since seqmonk is not a signed application, the first time you want to launch it
+right click (or control click) on the app and select Open (rather than double clicking). 
+You should then be prompted as to whether you trust this application.  If you say yes then
+you will be able to open it by double clicking in future.  If the app doesn't open then
+go to your OS preferences and look in the security section.  There will be a message saying
+that the app was blocked, and giving you an option to unblock it.  Once you've done that
+then it will work as normal.
+
+When first installed, the security settings on OSX will restrict which parts of your
+filesystem seqmonk can read from (only your home directory by default).  If seqmonk 
+detects that it has only limited ability to read the filesystem it will put a notification
+on the welcome screen with a pointer to instructions to grant it more permissions if
+you want this.
+
+
+Linux
+-----
+
+On linux seqmonk is distributed as a tar.gz file which contains a launch script and
+an embedded java runtime.
+
+You will need to extract the program from the tar file using something like:
+
+tar -xzf seqmonk_v1.45.0_linux64.tar.gz
+
+..but using whatever the file you downloaded is called.  You can then run the
+program by using the launcher.
+
+cd SeqMonk
+./seqmonk
+
+You can link (NOT COPY) the seqmonk launcher into somewhere like /usr/local/bin/ 
+to allow you to run seqmonk from anywhere on your filesystem.
+
+
+Configuring SeqMonk
+--------------------
+When you first run seqmonk you will be prompted to set up two file locations:
+
+1. A cache file which will store temporary data used when seqmonk is running.  This 
+   folder needs to be on a local disk (rather than a network drive) since lots of 
+   data will be written to and read from it.  It will default to a folder called
+   seqmonk_cache in your home directory, but you can change this.
+   
+2. A genomes folder which will hold a cache of the genome annotations for genomes 
+   you use in your projects.  This folder will retain information between seqmonk
+   sessions, but it can be re-downloaded at any point if lost so it doesn't need 
+   to be backed up.  This will default to a folder called seqmonk_genomes in your
+   home directory, but you can change this if you like.
+   
+ Once these are set up you can run seqmonk.  You can now optionally install and 
+ configure R.
+
+Configuring R
+-------------
+For some of the advanced statistical filters SeqMonk talks to a locally installed instance
+of R to do the statistical analysis.  Configuring R is optional, and SeqMonk will run 
+without it, but the R based filters and some of the graphical plots will not be available.
+
+To configure SeqMonk and R you first need to install R on your system.  R can be downloaded
+from http://www.r-project.org/ and you should follow the instructions there to load it.
+
+For OSX and Linux users the installation of some R packages will require that you have 
+suitable development tools installed.  For OSX the easiest way to get these is to install the
+OSX R Tools Package which can be found at:
+
+https://github.com/rmacoslib/r-macos-rtools
+
+For Linux users you should install the normal build environment on your system.  Many systems
+will have this already, but you can explicitly install them with:
+
+Ubuntu: sudo apt install build-essential
+
+CentOS: sudo yum groupinstall "Development tools"
+
+In addition you may need to install some additional development libraries.  The exact set 
+can change over time, but the one which often crops up is the xml2-dev library
+
+Ubuntu: sudo apt install libxml2-dev
+
+CentOS: sudo yum install libxml2-devel
+
+SeqMonk should prompt you to identify the location of your R installation (if it's not
+found automatically), and will attempt to install any packages it requires for you during
+initial setup.

@@ -1,0 +1,127 @@
+/**
+ * Copyright 2010-19 Simon Andrews
+ *
+ *    This file is part of Conclave.
+ *
+ *    Conclave is free software; you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation; either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    SeqMonk is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Conclave; if not, write to the Free Software
+ *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+package uk.ac.babraham.conclave.Displays.QQDistributionPlot;
+
+import java.util.Arrays;
+
+import uk.ac.babraham.conclave.ConclaveException;
+import uk.ac.babraham.conclave.DataTypes.DataStore;
+import uk.ac.babraham.conclave.DataTypes.Probes.ProbeList;
+import uk.ac.babraham.conclave.Displays.CumulativeDistribution.CumulativeDistributionPanel;
+import uk.ac.babraham.conclave.Utilities.AxisScale;
+
+public class QQDistributionPanel extends CumulativeDistributionPanel {
+
+
+	public QQDistributionPanel (DataStore store, ProbeList [] lists) throws ConclaveException {
+
+		super(store,lists);
+		absoluteMin = 0;
+		absoluteMax = 100;
+		usedMin = absoluteMin;
+		usedMax = absoluteMax;
+		
+		AxisScale yAxisScale = new AxisScale(usedMin, usedMax);
+		Y_AXIS_SPACE = yAxisScale.getXSpaceNeeded()+10;
+
+	}
+
+	public QQDistributionPanel (DataStore [] stores, ProbeList list) throws ConclaveException {
+		
+		super(stores,list);
+
+		absoluteMin = 0;
+		absoluteMax = 100;
+		usedMin = absoluteMin;
+		usedMax = absoluteMax;	
+		
+		AxisScale yAxisScale = new AxisScale(usedMin, usedMax);
+		Y_AXIS_SPACE = yAxisScale.getXSpaceNeeded()+10;
+
+	}
+		
+	protected float [] shortenDistribution (float [] distribution) {
+	
+		// Firstly we need to remove any point which aren't valid.
+		int nanCount = 0;
+		for (int i=0;i<distribution.length;i++) {
+			if (Float.isNaN(distribution[i]) || Float.isInfinite(distribution[i])) ++nanCount ;
+		}
+
+		double totalCount = 0;
+		float [] validDistribution = new float[distribution.length-nanCount];
+			
+		int index1 = 0;
+			
+		for (int i=0;i<distribution.length;i++) {
+			if (Float.isNaN(distribution[i]) || Float.isInfinite(distribution[i])) continue;
+			totalCount += Math.abs(distribution[i]);
+			validDistribution[index1] = distribution[i];
+			index1++;
+		}
+			
+		distribution = validDistribution;
+		
+		Arrays.sort(distribution);
+		
+		// Now we need to replace the values with percentiles
+		float [] absDistribution = new float[distribution.length];
+		
+		double runningTotal = 0;
+		for (int i=0;i<distribution.length;i++) {
+			runningTotal += Math.abs(distribution[i]);
+			absDistribution[i] = (float)(runningTotal/totalCount)*100;
+		}
+		
+		// Sanity check
+		if (absDistribution[absDistribution.length-1] != 100) {
+			throw new IllegalStateException("Last value in QQ was only " + absDistribution[absDistribution.length-1]);
+		}
+		
+		distribution = absDistribution;
+		
+		// We need to return a 1000 element array
+		float [] shortDistribution = new float[1000];
+		
+		if (distribution.length == 0) {
+			// There's no valid data here so make everything zero
+			for (int i=0;i<shortDistribution.length;i++) {
+				shortDistribution[i] = 0;
+			}
+		}
+		
+		else {
+			for (int i=0;i<shortDistribution.length;i++) {
+				int index = (int)((distribution.length-1)*(i/999d));
+				shortDistribution[i] = distribution[index];
+			}
+		}
+
+		// Sanity check 2
+		if (shortDistribution[shortDistribution.length-1] != 100) {
+			throw new IllegalStateException("Last value in short QQ was only " + shortDistribution[shortDistribution.length-1]);
+		}
+
+		
+		return shortDistribution;
+		
+	}
+
+}
