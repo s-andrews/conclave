@@ -98,11 +98,10 @@ public class DataStoreSummaryReport extends Report {
 		for (int s=0;s<storesToAnnotate.length;s++) {
 
 			summaries[s] = new StoreSummary(storesToAnnotate[s]);
-			summaries[s].forwardReads = storesToAnnotate[s].getReadCountForStrand(Location.FORWARD);
-			summaries[s].reverseReads = storesToAnnotate[s].getReadCountForStrand(Location.REVERSE);
-			summaries[s].unknownReads = storesToAnnotate[s].getReadCountForStrand(Location.UNKNOWN);
-			summaries[s].totalReads = storesToAnnotate[s].getTotalReadCount();
-			summaries[s].totalReadLength = storesToAnnotate[s].getTotalReadLength();
+			summaries[s].forwardReads = storesToAnnotate[s].getMeasureCountForStrand(Location.FORWARD);
+			summaries[s].reverseReads = storesToAnnotate[s].getMeasureCountForStrand(Location.REVERSE);
+			summaries[s].unknownReads = storesToAnnotate[s].getMeasureCountForStrand(Location.UNKNOWN);
+			summaries[s].totalReads = storesToAnnotate[s].getTotalMeasureCount();
 			
 			progressUpdated("Processing "+storesToAnnotate[s].name(), s, storesToAnnotate.length);
 			

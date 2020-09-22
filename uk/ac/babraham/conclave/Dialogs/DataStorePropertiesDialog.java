@@ -113,7 +113,7 @@ public class DataStorePropertiesDialog extends JDialog implements ActionListener
 		
 		infoPanel.add(new JLabel("Total Reads"),gbc);
 		gbc.gridx=2;
-		totalCount = new JLabel(""+dataStore.getTotalReadCount());
+		totalCount = new JLabel(""+dataStore.getTotalMeasureCount());
 		infoPanel.add(totalCount,gbc);
 		
 		gbc.gridx=1;
@@ -121,7 +121,7 @@ public class DataStorePropertiesDialog extends JDialog implements ActionListener
 
 		infoPanel.add(new JLabel("Forward Count"),gbc);
 		gbc.gridx=2;
-		forwardCount = new JLabel(""+dataStore.getReadCountForStrand(Location.FORWARD));
+		forwardCount = new JLabel(""+dataStore.getMeasureCountForStrand(Location.FORWARD));
 		infoPanel.add(forwardCount,gbc);
 		
 		gbc.gridx=1;
@@ -129,7 +129,7 @@ public class DataStorePropertiesDialog extends JDialog implements ActionListener
 		
 		infoPanel.add(new JLabel("Reverse Count"),gbc);
 		gbc.gridx=2;
-		reveseCount = new JLabel(""+dataStore.getReadCountForStrand(Location.REVERSE));
+		reveseCount = new JLabel(""+dataStore.getMeasureCountForStrand(Location.REVERSE));
 		infoPanel.add(reveseCount,gbc);
 		
 		gbc.gridx=1;
@@ -137,7 +137,7 @@ public class DataStorePropertiesDialog extends JDialog implements ActionListener
 		
 		infoPanel.add(new JLabel("Unknown Count"),gbc);
 		gbc.gridx=2;
-		unknownCount = new JLabel(""+dataStore.getReadCountForStrand(Location.UNKNOWN));
+		unknownCount = new JLabel(""+dataStore.getMeasureCountForStrand(Location.UNKNOWN));
 		infoPanel.add(unknownCount,gbc);
 		
 		gbc.gridx=1;

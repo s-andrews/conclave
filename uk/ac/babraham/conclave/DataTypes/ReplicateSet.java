@@ -158,6 +158,12 @@ public class ReplicateSet extends DataStore {
 	/* (non-Javadoc)
 	 * @see uk.ac.babraham.SeqMonk.DataTypes.DataStore#getReadsForChromsome(uk.ac.babraham.SeqMonk.DataTypes.Genome.Chromosome)
 	 */
+	
+	/**
+	 * For a replicate set we're going to have to make the assumption that
+	 * all of the replicates are using the same raw measures.  This may not
+	 * end up being true but it allows us to do some stuff for now.
+	 */
 	public ReadsWithCounts getReadsForChromosome(Chromosome c) {
 		
 		if (lastUsedChromosome != null && lastUsedChromosome == c) {
@@ -165,7 +171,7 @@ public class ReplicateSet extends DataStore {
 		}
 		
 		ReadsWithCounts [] readsFromAllChrs = new ReadsWithCounts[dataStores.length];
-		
+				
 		for (int i=0;i<dataStores.length;i++) {
 			readsFromAllChrs[i] = dataStores[i].getReadsForChromosome(c);
 		}
@@ -178,59 +184,54 @@ public class ReplicateSet extends DataStore {
 	/* (non-Javadoc)
 	 * @see uk.ac.babraham.SeqMonk.DataTypes.DataStore#getTotalReadCount()
 	 */
-	public long getTotalReadCount() {
-		long count = 0;
-		for (int i=0;i<dataStores.length;i++) {
-			count += dataStores[i].getTotalReadCount();
+	public int getTotalMeasureCount() {
+		if (dataStores.length==0) {
+			return 0;
 		}
-		return count;
+		return dataStores[0].getTotalMeasureCount();
 	}
+
+	public int getLongestMeasure() {
+		if (dataStores.length==0) {
+			return 0;
+		}
+		return dataStores[0].getLongestMeasure();
+	}
+
 	
-	public long getTotalPairCount () {
-		return getTotalReadCount()/2;
-	}
 	
 	/* (non-Javadoc)
 	 * @see uk.ac.babraham.SeqMonk.DataTypes.DataStore#getReadCountForStrand()
 	 */
-	public long getReadCountForStrand(int strand) {
-		long count = 0;
-		for (int i=0;i<dataStores.length;i++) {
-			count += dataStores[i].getReadCountForStrand(strand);
+	public int getMeasureCountForStrand(int strand) {
+		if (dataStores.length==0) {
+			return 0;
 		}
-		return count;
+		return dataStores[0].getMeasureCountForStrand(strand);
 	}
 
-
-	/* (non-Javadoc)
-	 * @see uk.ac.babraham.SeqMonk.DataTypes.DataStore#getTotalReadLength()
-	 */
-	public long getTotalReadLength() {
-		long count = 0;
-		for (int i=0;i<dataStores.length;i++) {
-			count += dataStores[i].getTotalReadLength();
-		}
-		return count;
-	}
 	
-	public int getMaxReadLength() {
+	public float getMaxValue() {
 
-		int max = 0;
+		float max = 0;
 		for (int i=0;i<dataStores.length;i++) {
-			if (i==0 || dataStores[i].getMaxReadLength() > max) max = dataStores[i].getMaxReadLength();
+			if (i==0 || dataStores[i].getMaxValue() > max) max = dataStores[i].getMaxValue();
 		}
 
 		return max;
 	}
 
-	public int getMinReadLength() {
-		int min = 0;
+	public float getMinValue() {
+
+		float min = 0;
 		for (int i=0;i<dataStores.length;i++) {
-			if (i==0 || dataStores[i].getMinReadLength() < min) min = dataStores[i].getMinReadLength();
+			if (i==0 || dataStores[i].getMinValue() < min) min = dataStores[i].getMinValue();
 		}
 
 		return min;
 	}
+
+	
 	
 	/* (non-Javadoc)
 	 * @see uk.ac.babraham.SeqMonk.DataTypes.DataStore#getReadsForProbe(uk.ac.babraham.SeqMonk.DataTypes.Probes.Probe)
@@ -243,12 +244,7 @@ public class ReplicateSet extends DataStore {
 		return new ReadsWithCounts(returnReads);
 	}
 	
-	
-	public long [] getReadsForProbe (Probe p) {
-		return getReadsWithCountsForProbe(p).expandReads();
-	}
 
-	
 	
 	/**
 	 * Checks if is quantitated.  Only true if all of the stores

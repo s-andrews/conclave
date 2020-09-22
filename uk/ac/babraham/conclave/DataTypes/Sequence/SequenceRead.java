@@ -198,7 +198,7 @@ public class SequenceRead {
 		quicksort(values, 0, values.length-1);
 	}
 	
-	public static void sort (long [] reads, int [] counts) {
+	public static void sort (long [] reads, float [] counts) {
 
 		if (reads == null || reads.length == 0) return;
 
@@ -239,12 +239,12 @@ public class SequenceRead {
 	}
 	
 	
-	private static void pairedQuicksort (long [] reads, int [] counts, int lo, int hi) {
+	private static void pairedQuicksort (long [] reads, float [] counts, int lo, int hi) {
 		//  lo is the lower index, hi is the upper index
 		//  of the region of array a that is to be sorted
 		int i=lo, j=hi;
 		long temp;
-		int temp2;
+		float temp2;
 
 		// comparison element x
 		long x=reads[(lo+hi)/2];

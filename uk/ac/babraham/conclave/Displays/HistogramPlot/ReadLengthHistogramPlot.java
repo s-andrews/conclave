@@ -101,8 +101,8 @@ public class ReadLengthHistogramPlot extends JDialog implements ActionListener {
 		// TODO: This is horribly inefficient, and kludged we should do better.
 		
 		float [] data;
-		if (d.getTotalReadCount() < 2000000000l) {
-			data = new float[(int)d.getTotalReadCount()];
+		if (d.getTotalMeasureCount() < 2000000000l) {
+			data = new float[(int)d.getTotalMeasureCount()];
 		}
 		else {
 			data = new float[2000000000];

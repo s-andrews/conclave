@@ -65,7 +65,7 @@ public class ProbeGeneratorUtilities {
 		long genomeSize = collection.genome().getTotalGenomeLength();
 			
 		for (int i=0;i<data.length;i++) {
-			long count = data[i].getTotalReadCount();
+			long count = data[i].getTotalMeasureCount();
 			
 			// Don't include stores with no data at all
 			if (count == 0) continue;

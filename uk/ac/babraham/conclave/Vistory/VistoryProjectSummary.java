@@ -76,7 +76,7 @@ public class VistoryProjectSummary {
 		for (int s=0;s<sets.length;s++) {
 			data[s+1][0] = sets[s].name();
 			data[s+1][1] = sets[s].fileName();
-			data[s+1][2] = ""+sets[s].getTotalReadCount();
+			data[s+1][2] = ""+sets[s].getTotalMeasureCount();
 			data[s+1][3] = sets[s].importOptions();			
 		}
 		

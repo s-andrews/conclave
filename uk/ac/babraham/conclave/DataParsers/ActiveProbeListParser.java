@@ -189,7 +189,7 @@ public class ActiveProbeListParser extends DataParser {
 				// We can now make the new reading
 				try {
 					read = SequenceRead.packPosition(start,end,strand);
-					newData.addData(chrs[c],read);
+					newData.addData(chrs[c],read, 1);
 				}
 				catch (ConclaveException e) {
 					progressWarningReceived(e);

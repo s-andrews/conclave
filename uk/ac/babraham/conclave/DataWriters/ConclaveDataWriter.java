@@ -430,7 +430,7 @@ public class ConclaveDataWriter implements Runnable, Cancellable {
 	
 	private boolean printStandardDataSet (DataSet set, PrintStream p, int index, int indexTotal) throws IOException {
 			
-		p.println(set.getTotalReadCount()+"\t"+set.name());
+		p.println(set.getTotalMeasureCount()+"\t"+set.name());
 
 		// Go through one chromosome at a time.
 		Chromosome [] chrs = data.genome().getAllChromosomes();

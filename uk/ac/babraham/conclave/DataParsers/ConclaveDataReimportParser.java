@@ -316,7 +316,8 @@ public class ConclaveDataReimportParser extends DataParser {
 						int strand = Integer.parseInt(sections[3]);
 
 						try {
-							dataSets[i].addData(c,SequenceRead.packPosition(start, end, strand));
+							// TODO: CONCLAVE FIX
+							dataSets[i].addData(c,SequenceRead.packPosition(start, end, strand),1);
 						}
 						catch (ConclaveException ex) {
 							progressWarningReceived(ex);
@@ -392,13 +393,15 @@ public class ConclaveDataReimportParser extends DataParser {
 									readsRead += (count-1);
 
 									for (int x=1;x<=count;x++) {
-										dataSets[i].addData(c,packedPosition);								
+										// TODO: CONCLAVE FIX
+										dataSets[i].addData(c,packedPosition,1);
 									}
 								}
 
 								else {
 									packedPosition = Long.parseLong(line);
-									dataSets[i].addData(c,packedPosition);
+									// TODO: CONCLAVE FIX
+									dataSets[i].addData(c,packedPosition,1);
 								}
 							}
 							catch (ConclaveException ex) {

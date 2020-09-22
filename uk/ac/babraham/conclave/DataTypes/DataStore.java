@@ -75,15 +75,6 @@ public abstract class DataStore implements Comparable<DataStore>{
 	}
 	
 	/**
-	 * Gets the reads for a probe as a linear array.
-	 * 
-	 * @param p the p
-	 * @return the reads for probe
-	 */
-	public abstract long [] getReadsForProbe (Probe p);
-
-	
-	/**
 	 * Gets the reads for a probe as a readsWithCounts object.
 	 * 
 	 * @param p the p
@@ -113,7 +104,7 @@ public abstract class DataStore implements Comparable<DataStore>{
 	 * 
 	 * @return the total read count
 	 */
-	public abstract long getTotalReadCount();
+	public abstract int getTotalMeasureCount();
 	
 	/**
 	 * Gets the total read count for a particular strand.
@@ -121,28 +112,25 @@ public abstract class DataStore implements Comparable<DataStore>{
 	 * @param strand the strand requested (FORWARD,REVERSE or UNKNOWN)
 	 * @return the total read count for the specified strand
 	 */
-	public abstract long getReadCountForStrand(int strand);
+	public abstract int getMeasureCountForStrand(int strand);
 	
-	/**
-	 * Gets the total read length.
-	 * 
-	 * @return the total read length
-	 */
-	public abstract long getTotalReadLength();
+
+	public abstract int getLongestMeasure();
+	
 	
 	/**
 	 * Gets the length of the longest read.
 	 * 
 	 * @return the longest read length
 	 */
-	public abstract int getMaxReadLength();
+	public abstract float getMaxValue();
 	
 	/**
 	 * Gets the length of the shortest read.
 	 * 
 	 * @return the shortest read length
 	 */
-	public abstract int getMinReadLength();
+	public abstract float getMinValue();
 			
 	/**
 	 * Name.

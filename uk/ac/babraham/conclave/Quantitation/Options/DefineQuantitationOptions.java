@@ -47,13 +47,8 @@ import uk.ac.babraham.conclave.DataTypes.ReplicateSet;
 import uk.ac.babraham.conclave.Dialogs.ProgressDialog.ProgressDialog;
 import uk.ac.babraham.conclave.Dialogs.Renderers.QuantitationTypeRenderer;
 import uk.ac.babraham.conclave.Filters.OptionsListener;
-import uk.ac.babraham.conclave.Quantitation.CoverageQuantitation;
-import uk.ac.babraham.conclave.Quantitation.DifferenceQuantitation;
 import uk.ac.babraham.conclave.Quantitation.DistanceToFeatureQuantitation;
-import uk.ac.babraham.conclave.Quantitation.DuplicationQuantitation;
 import uk.ac.babraham.conclave.Quantitation.EnrichmentNormalisationQuantitation;
-import uk.ac.babraham.conclave.Quantitation.EnrichmentQuantitation;
-import uk.ac.babraham.conclave.Quantitation.ExactOverlapQuantitation;
 import uk.ac.babraham.conclave.Quantitation.FixedValueQuantitation;
 import uk.ac.babraham.conclave.Quantitation.LinearRegressionNormalisationQuantitation;
 import uk.ac.babraham.conclave.Quantitation.LogTransformQuantitation;
@@ -104,11 +99,6 @@ public class DefineQuantitationOptions extends JDialog implements ActionListener
 		listPanel.add(new JLabel("Quantitation Options",JLabel.LEFT),BorderLayout.NORTH);
 
 		quantitations = new Quantitation [] {
-				new EnrichmentQuantitation(application),
-				new ExactOverlapQuantitation(application),
-				new DifferenceQuantitation(application),
-				new CoverageQuantitation(application),
-				new DuplicationQuantitation(application),
 				new DistanceToFeatureQuantitation(application),
 				new ProbeLengthQuantitation(application),
 				new FixedValueQuantitation(application),

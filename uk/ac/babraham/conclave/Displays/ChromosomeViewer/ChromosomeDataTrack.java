@@ -760,7 +760,7 @@ public class ChromosomeDataTrack extends JPanel implements MouseListener, MouseM
 				lastReadIndexStart = reads.length-1;
 			}
 			for (int i=lastReadIndexStart;i>=0;i--) {
-				if (SequenceRead.start(reads[i]) < startBp-data.getMaxReadLength()) {
+				if (SequenceRead.start(reads[i]) < startBp-data.getMaxValue()) {
 					lastReadIndexStart = i;
 					hitLimit=true;
 					break;
@@ -777,7 +777,7 @@ public class ChromosomeDataTrack extends JPanel implements MouseListener, MouseM
 
 			// Go forward until we hit our first read
 			for (int i=lastReadIndexStart;i<reads.length;i++) {
-				if (SequenceRead.start(reads[i]) >= startBp-data.getMaxReadLength()) {
+				if (SequenceRead.start(reads[i]) >= startBp-data.getMaxValue()) {
 					lastReadIndexStart = i;
 					break;
 				}

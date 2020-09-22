@@ -197,7 +197,7 @@ public class BedFileParser extends DataParser {
 		
 						// We can now make the new reading
 						long read = SequenceRead.packPosition(start,end,strand);
-						newData[f].addData(c.chromosome(),read);
+						newData[f].addData(c.chromosome(),read,1);
 					}
 					catch (IllegalArgumentException iae) {
 						progressWarningReceived(iae);

@@ -161,7 +161,7 @@ public class VisibleStoresParser extends DataParser {
 
 			if (downsample) {
 				// Work out the probability for this sample
-				long realReadCount = visibleStores[s].getTotalReadCount();
+				long realReadCount = visibleStores[s].getTotalMeasureCount();
 				downsampleProbabilty = ((double)downsampleTarget) / realReadCount;
 			}
 
@@ -337,17 +337,7 @@ public class VisibleStoresParser extends DataParser {
 					}
 
 					// We can now make the new reading
-					try {
-						read = SequenceRead.packPosition(start,end,strand);
-						if (! prefs.isHiC()) {
-							// HiC additions are deferred until we know the other end is OK too.
-							newData.addData(chrs[c],read);
-						}
-					}
-					catch (ConclaveException e) {
-						progressWarningReceived(e);
-						continue;
-					}
+					read = SequenceRead.packPosition(start,end,strand);
 
 				}
 			}

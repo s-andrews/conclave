@@ -74,14 +74,12 @@ import uk.ac.babraham.conclave.Dialogs.DataTrackSelector.DataTrackSelector;
 import uk.ac.babraham.conclave.Dialogs.Filters.FilterOptionsDialog;
 import uk.ac.babraham.conclave.Dialogs.GotoDialog.GotoDialog;
 import uk.ac.babraham.conclave.Dialogs.GotoDialog.GotoWindowDialog;
-import uk.ac.babraham.conclave.Displays.AlignedProbePlot.AlignedSummaryPreferencesDialog;
 import uk.ac.babraham.conclave.Displays.BeanPlot.MultiBeanPlotDialog;
 import uk.ac.babraham.conclave.Displays.BoxWhisker.MultiBoxWhiskerDialog;
 import uk.ac.babraham.conclave.Displays.CorrelationMatrix.CorrelationMatrix;
 import uk.ac.babraham.conclave.Displays.CumulativeDistribution.CumulativeDistributionDialog;
 import uk.ac.babraham.conclave.Displays.DataStoreTree.DataStoreTreeDialog;
 import uk.ac.babraham.conclave.Displays.Domainogram.DomainogramPreferencesDialog;
-import uk.ac.babraham.conclave.Displays.DuplicationPlot.DuplicationPlotDialog;
 import uk.ac.babraham.conclave.Displays.GiraphPlot.GiraphPlot;
 import uk.ac.babraham.conclave.Displays.Help.HelpDialog;
 import uk.ac.babraham.conclave.Displays.HierarchicalClusterPlot.HierarchicalClusterDialog;
@@ -92,16 +90,12 @@ import uk.ac.babraham.conclave.Displays.LineGraph.LineGraphDialog;
 import uk.ac.babraham.conclave.Displays.MAPlot.MAPlotDialog;
 import uk.ac.babraham.conclave.Displays.PCAPlot.PCADataCalculator;
 import uk.ac.babraham.conclave.Displays.ProbeListReport.ProbeListReportCreator;
-import uk.ac.babraham.conclave.Displays.ProbeTrendPlot.TrendOverProbePreferencesDialog;
 import uk.ac.babraham.conclave.Displays.QQDistributionPlot.QQDistributionDialog;
 import uk.ac.babraham.conclave.Displays.QuantitationTrendPlot.QuantitationTrendHeatmapPreferencesDialog;
 import uk.ac.babraham.conclave.Displays.QuantitationTrendPlot.QuantitationTrendPlotPreferencesDialog;
-import uk.ac.babraham.conclave.Displays.RNASeqQCPlot.RNAQCPreferencesDialog;
 import uk.ac.babraham.conclave.Displays.Report.ReportOptions;
 import uk.ac.babraham.conclave.Displays.ScatterPlot.ScatterPlotDialog;
-import uk.ac.babraham.conclave.Displays.SmallRNAQCPlot.SmallRNAQCPreferencesDialog;
 import uk.ac.babraham.conclave.Displays.StarWars.MultiStarWarsDialog;
-import uk.ac.babraham.conclave.Displays.StrandBias.StrandBiasPlotDialog;
 import uk.ac.babraham.conclave.Displays.TsneDataStorePlot.TsneOptionsDialog;
 import uk.ac.babraham.conclave.Displays.VariancePlot.VariancePlotDialog;
 import uk.ac.babraham.conclave.Displays.Vistory.VistoryDialog;
@@ -1617,14 +1611,6 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 		}
 
 		
-		else if (action.equals("plot_rna_qc")) {
-			new RNAQCPreferencesDialog(application.dataCollection(), application.drawnDataSets());
-		}
-
-		else if (action.equals("plot_small_rna_qc")) {
-			new SmallRNAQCPreferencesDialog(application.dataCollection());
-		}
-
 		else if (action.startsWith("toolbar_")) {
 
 			// We're toggling the visibility of one of the toolbars;
@@ -1682,14 +1668,6 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 				new MultiStarWarsDialog(application.drawnDataSets(),probeLists);
 			}
 
-			else if (action.equals("multiprobe_view_probetrend")) {
-				if (! application.dataCollection().isQuantitated()) {
-					JOptionPane.showMessageDialog(application, "You need to have quantitated your data to view this plot","No quantitation...",JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
-					new TrendOverProbePreferencesDialog(probeLists,application.drawnDataSets());
-				}
-			}
 
 			else if (action.equals("multiprobe_view_cumdist")) {
 				if (application.dataCollection().getActiveDataStore() == null) {
@@ -1757,28 +1735,6 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 				}
 			}
 		}
-		else if (action.equals("plot_duplication")) {
-			if (application.dataCollection().probeSet() == null) {
-				JOptionPane.showMessageDialog(application, "You need to make some probes before running this plot","No probes...",JOptionPane.INFORMATION_MESSAGE);					
-			}
-			else {
-				new DuplicationPlotDialog(application.drawnDataSets(),application.dataCollection().probeSet().getActiveList());
-			}
-		}
-
-//		else if (action.equals("view_distance_value_histogram")) {
-//			if (application.dataCollection().getActiveDataStore() == null) {
-//				JOptionPane.showMessageDialog(application, "You need to select a data store in the Data panel before viewing this plot","No data selected...",JOptionPane.INFORMATION_MESSAGE);
-//			}
-//			else {
-//				if (! application.dataCollection().isQuantitated()) {
-//					JOptionPane.showMessageDialog(application, "Your data hasn't been quantitated yet","No quantitation...",JOptionPane.INFORMATION_MESSAGE);					
-//				}
-//				else {
-//					new DistanceValueDialog(application.dataCollection());
-//				}
-//			}
-//		}
 
 		else if (action.equals("view_read_length_histogram")) {
 			if (application.dataCollection().getActiveDataStore() == null) {
@@ -1798,14 +1754,6 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 			}
 		}
 
-		else if (action.equals("view_probetrend")) {
-			if (! application.dataCollection().isQuantitated()) {
-				JOptionPane.showMessageDialog(application, "You need to have quantitated your data to view this plot","No quantitation...",JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				new TrendOverProbePreferencesDialog(new ProbeList [] {application.dataCollection().probeSet().getActiveList()},application.drawnDataSets());
-			}
-		}
 
 		else if (action.equals("view_quanttrend")) {
 			if (! application.dataCollection().isQuantitated()) {
@@ -1830,25 +1778,6 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 //		else if (action.equals("plot_codon_bias")) {
 //			new CodonBiasDialog(application.drawnDataSets(), application.dataCollection().genome().annotationCollection());
 //		}
-		else if (action.equals("view_aligned_probes")) {
-			if (! application.dataCollection().isQuantitated()) {
-				JOptionPane.showMessageDialog(application, "You need to have quantitated your data to view this plot","No quantitation...",JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				new AlignedSummaryPreferencesDialog(new ProbeList[]{application.dataCollection().probeSet().getActiveList()},application.drawnDataSets());
-			}
-		}
-		else if (action.equals("view_aligned_probes_multi")) {
-			if (! application.dataCollection().isQuantitated()) {
-				JOptionPane.showMessageDialog(application, "You need to have quantitated your data to view this plot","No quantitation...",JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				ProbeList [] probeLists = ProbeListSelectorDialog.selectProbeLists();
-				if (probeLists == null || probeLists.length == 0) return;
-
-				new AlignedSummaryPreferencesDialog(probeLists,application.drawnDataSets());
-			}
-		}
 
 
 		else if (action.equals("plot_domainogram")) {
@@ -1870,19 +1799,7 @@ public class ConclaveMenu extends JMenuBar implements ActionListener {
 			else {
 				new VariancePlotDialog(application.dataCollection());
 			}
-		}
-
-
-		else if (action.equals("view_strand_bias_plot")) {
-			if (! application.dataCollection().isQuantitated()) {
-				JOptionPane.showMessageDialog(application, "You need to have quantitated your data to view this plot","No quantitation...",JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				new StrandBiasPlotDialog(application.dataCollection());
-			}
-		}
-
-		
+		}		
 		
 		else if (action.equals("view_scatterplot")) {
 			if (! application.dataCollection().isQuantitated()) {

@@ -27,11 +27,11 @@ package uk.ac.babraham.conclave.Utilities;
  */
 public class ThreadSafeMinMax {
 
-	private int min = 0;
-	private int max = 0;
+	private float min = 0;
+	private float max = 0;
 	private boolean anyData = false;
 	
-	public synchronized void addValue (int value) {
+	public synchronized void addValue (float value) {
 		if (anyData) {
 			if (value < min) min = value;
 			if (value > max) max = value;
@@ -43,11 +43,11 @@ public class ThreadSafeMinMax {
 	
 	}
 	
-	public int min () {
+	public float min () {
 		return min;
 	}
 	
-	public int max () {
+	public float max () {
 		return max;
 	}
 	

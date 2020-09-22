@@ -976,7 +976,7 @@ public class ConclaveApplication extends JFrame implements ProgressListener, Dat
 		
 		for (int i=0;i<newData.length;i++) {
 						
-			if (newData[i].getTotalReadCount() > 0) {
+			if (newData[i].getTotalMeasureCount() > 0) {
 				dataCollection.addDataSet(newData[i]);
 				storesToAdd.add(newData[i]);
 			}

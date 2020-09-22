@@ -197,7 +197,7 @@ public class GenericSeqReadParser extends DataParser {
 					int strand;
 					int start;
 					int end;
-					int count = 1;
+					float value = 0;
 
 					try {
 
@@ -211,15 +211,14 @@ public class GenericSeqReadParser extends DataParser {
 							end = temp;
 						}
 
-						if (countColValue != -1 && sections[countColValue].length()>0) {
-							try {
-								count = Integer.parseInt(sections[countColValue].replaceAll(" ", ""));
-							}
-							catch (NumberFormatException e) {
-								progressWarningReceived(new ConclaveException("Count value "+sections[countColValue]+" was not an integer"));
-								continue;
-							}
+						try {
+							value = Float.parseFloat(sections[countColValue].replaceAll(" ", ""));
 						}
+						catch (NumberFormatException e) {
+							progressWarningReceived(new ConclaveException("Value "+sections[countColValue]+" was not an number"));
+							continue;
+						}
+						
 						
 						if (useStrand) {
 							sections[strandColValue] = sections[strandColValue].replaceAll(" ", "");
@@ -280,9 +279,7 @@ public class GenericSeqReadParser extends DataParser {
 					// We can now make the new reading
 					try {
 						long read = SequenceRead.packPosition(start,end,strand);
-						for (int i=0;i<count;i++) {
-							newData[f].addData(c.chromosome(),read);
-						}
+						newData[f].addData(c.chromosome(),read,value);
 					}
 					catch (ConclaveException e) {
 						progressWarningReceived(e);

@@ -90,8 +90,6 @@ public class DefineProbeOptions extends JDialog implements ActionListener, Probe
 				new RunningWindowProbeGenerator(application.dataCollection()),
 				new FeatureProbeGenerator(application.dataCollection()),
 				new FeaturePercentileProbeGenerator(application.dataCollection()),
-				new ContigProbeGenerator(application.dataCollection()),
-				new ReadPositionProbeGenerator(application.dataCollection()),
 				new RandomProbeGenerator(application.dataCollection()),
 				new ProbeListProbeGenerator(application.dataCollection()),
 				new ShuffleListProbeGenerator(application.dataCollection()),
